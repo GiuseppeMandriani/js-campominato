@@ -4,16 +4,23 @@
 - In seguito deve chiedere all’utente di inserire un numero da 1 a 100 alla volta, se il numero è presente nella lista dei numeri generati la partita termina altrimenti continua chiedendo all’utente un altro numero.
 - La partita termina quando il giocatore inserisce un numero “vietato” o raggiunge il numero massimo possibile di numeri consentiti.
 - Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha inserito un numero consentito.
- * 
+
+* BONUS
+
+    All’inizio il software richiede anche una difficoltà all’utente che cambia il range di numeri casuali:
+    con difficoltà 0 => tra 1 e 100
+    con difficoltà 1 => tra 1 e 80
+    con difficoltà 2 => tra 1 e 50 
+
  */
 
 // FASE 1 Setup e creazione bombe
 
-var numeroMax = 10;                            // Numeri giocabili
+var numeroMax;                                  // Numeri giocabili
 
-var numeroBombe = 2;                           // Numero bombe da generare
+var numeroBombe = 16;                            // Numero bombe da generare
 
-var possibilità = numeroMax - numeroBombe;      // Possibilità corrette (max - min)
+var possibilità;                                // Possibilità corrette (max - min)
 
 var listaBombe = [];                            // Numeri vietati
 
@@ -21,6 +28,28 @@ var numeriConsentiti = [];                      // Numeri corretti inseriti dall
 
 var utente = 0;                                 // Scelta utente      
 
+
+
+// BONUS SCELTA LIVELLO DI DIFFICOLTA'
+
+var livello = parseInt(prompt('Scegli il livello di difficolta da 0 a 2: \n0: Facile \n1: Medio \n2: Difficile ').trim());
+//Validazione
+while((isNaN(livello)) || livello < 0 || livello > 2){
+    livello = parseInt(prompt('Scegli livello: \n0 \n1 \n2').trim());
+}
+
+switch (livello){
+    case 0:
+        numeroMax = 100;
+        break;
+    case 1:
+        numeroMax = 80;
+        break;
+    case 2:
+        numeroMax = 50
+}
+
+possibilità = numeroMax - numeroBombe;
 
 // FASE 2 Generazione bombe ( 16 numeri random univoci)
 
@@ -103,7 +132,7 @@ console.log('Tentativi riusciti: ',numeriConsentiti.length);
 /**
  * 
  * @param {number} max // Numero massimo
- * @returns 
+ * @returns // Numero random
  */
 function numeroRandom(max) {
     return (Math.floor(Math.random() * max )+ 1);
